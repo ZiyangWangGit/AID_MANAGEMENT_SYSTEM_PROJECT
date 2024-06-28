@@ -235,7 +235,7 @@ namespace sdds {
 			if (userInput == 3 || userInput == 4) {
 				cout << "Item description: ";
 				cin.ignore(2000, '\n');
-				char description[100]; 
+				char description[100];
 				cin.getline(description, sizeof(description));
 				int itemFound = list(description);
 				if (itemFound != 0) {
@@ -316,7 +316,7 @@ namespace sdds {
 								do {
 									cin.ignore(2000, '\n');
 									cin >> quantityReduce;
-									if (cin.fail()|| quantityReduce <= 0) {
+									if (cin.fail() || quantityReduce <= 0) {
 										cin.clear();
 										cin.ignore(2000, '\n');
 										cout << "Enter a valid value" << endl << endl;
@@ -336,7 +336,7 @@ namespace sdds {
 							default:
 								cout << "Invalid choice. Aborted!" << endl << endl;
 								break;
-							}						
+							}
 						}
 					}
 				}
@@ -353,7 +353,7 @@ namespace sdds {
 		} while (userInput != 0);
 	}
 
-	void AidMan::save(){
+	void AidMan::save() {
 		if (fileName != nullptr) {
 			std::ofstream outputFile(fileName);
 			if (outputFile.is_open()) {
@@ -361,11 +361,11 @@ namespace sdds {
 					productArray[i]->save(outputFile);
 				}
 			}
-		
+
 		}
 	}
 
-	bool AidMan::load(){
+	bool AidMan::load() {
 		ifstream inputFile(fileName);
 		if (!(inputFile.is_open())) {
 			cout << "Failed to open " << fileName << " for reading!" << endl;
@@ -382,35 +382,35 @@ namespace sdds {
 			return false;
 		}
 
-			for (int i = 0; i < productItems; ++i) {
-				delete productArray[i];
+		for (int i = 0; i < productItems; ++i) {
+			delete productArray[i];
+		}
+
+		while (inputFile.peek() != EOF) {
+
+			int firstChar = inputFile.peek();  // peek without consuming the character
+			int skuNumber = 0;
+			if (isdigit(firstChar)) {
+				skuNumber = firstChar - '0';
 			}
 
-			while (inputFile.peek() != EOF) {
-
-				int firstChar = inputFile.peek();  // peek without consuming the character
-				int skuNumber = 0;
-				if (isdigit(firstChar)) {
-					skuNumber = firstChar - '0';
-				}
-
-				if (skuNumber >= 1 && skuNumber < 4) {
-					productArray[productItems] = new Perishable();
-				}
-				else {
-					productArray[productItems] = new Item();
-				}
-				productArray[productItems]->load(inputFile);
-
-				if (productArray[productItems]) {// Check if the loaded item is in a good state
-					++productItems;
-				}
-				else {
-					delete productArray[productItems];
-				}
-				inputFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			if (skuNumber >= 1 && skuNumber < 4) {
+				productArray[productItems] = new Perishable();
 			}
-			return true;
+			else {
+				productArray[productItems] = new Item();
+			}
+			productArray[productItems]->load(inputFile);
+
+			if (productArray[productItems]) {// Check if the loaded item is in a good state
+				++productItems;
+			}
+			else {
+				delete productArray[productItems];
+			}
+			inputFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+		return true;
 	}
 
 	int AidMan::list(const char* sub_desc) {
@@ -421,7 +421,7 @@ namespace sdds {
 		else {
 			cout << " ROW |  SKU  | Description                         | Have | Need |  Price  | Expiry\n";
 			cout << "-----+-------+-------------------------------------+------+------+---------+-----------\n";
-			if (sub_desc == nullptr) {		
+			if (sub_desc == nullptr) {
 				for (int i = 0; i < productItems; i++) {
 					productArray[i]->linear(true);
 					cout << "   " << i + 1 << " | ";

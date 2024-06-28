@@ -28,8 +28,8 @@ namespace sdds {
 
 	Menu::Menu(const char* menu) {
 
-		int characters;
-		int optionNumber = 0;
+		size_t characters;
+		int optionNumber = 1;
 		characters = strlen(menu);  //check how many characters within the string;
 
 		for (int i = 0; i < characters; i++) {
@@ -52,34 +52,50 @@ namespace sdds {
 	}
 
 	Menu :: ~Menu() {
-		if (menuValid == true) {
-			delete[] menuContent;
-		}
+		delete[] menuContent;
 	}
 
 	unsigned int Menu::run() {
 
 		unsigned int numEntered;
+		unsigned int num = numOfOption;
 
 		if (menuValid == false) {
 			cout << "Invalid Menu!" << endl;
 			numEntered = 0;
 		}
 		else {
-			cout << menuContent << endl;
+			int characterCount = 0;
+			for (int i = 1; i <= numOfOption; i++) {
+				cout << i << "- ";
+
+				while (menuContent[characterCount] != '\t' && menuContent[characterCount] != '\0') {
+					cout << menuContent[characterCount];
+					characterCount++;
+				}
+				cout << endl;
+				characterCount++;
+			}
+
 			cout << "---------------------------------" << endl;
 			cout << "0- Exit" << endl;
+			cout << "> ";
 
+			bool flag = false;
 			do {
-				cout << "> ";
 				cin >> numEntered;
-				if (numEntered < 0 || numEntered > numOfOption) {
-					cout << "Value out of range [0<=" << numOfOption << "me <= X]: ";
+				if (numEntered < 0 || numEntered > num) {
+					cout << "Value out of range [0<=val<=" << num << "]: ";
 				}
-				else if (!(isdigit(numEntered))) {
+				else if (cin.fail()) {
 					cout << "Invalid Integer, retry: ";
+					cin.clear();
+					cin.ignore(1000, '\n');
 				}
-			} while (numEntered < 0 || numEntered > numOfOption || !(isdigit(numEntered)));
+				else {
+					flag = true;
+				}
+			} while (!(flag));
 		}
 
 		return numEntered;

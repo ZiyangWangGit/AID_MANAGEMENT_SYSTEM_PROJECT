@@ -32,7 +32,7 @@ namespace sdds {
 		int m_month;
 		int m_day;
 		bool m_formatted = true;
-		sdds::Status State;
+		Status State;
 
 	public:
 		Date();

@@ -16,6 +16,8 @@
 *
 
 **************************************************************************************/
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <cstring>
 #include "Date.h"
 #include "Utils.h"
@@ -31,7 +33,6 @@ namespace sdds {
         m_year = year;
         m_month = month;
         m_day = date;
-        validate();
     }
 
 
@@ -112,15 +113,13 @@ namespace sdds {
     istream& Date::read(std::istream& is) {
         int inputValue;
         is >> inputValue;
+        State.clear();
 
         if (is.fail()) {
             cerr << "Invalid date value";
             is.setstate(std::ios::failbit);
         }
         else {
-            ut.testMode(false);
-            ut.getSystemDate(&m_year, &m_month, &m_day);
-
             int length = 0;
             int temp = inputValue;
             while (temp > 0) {
