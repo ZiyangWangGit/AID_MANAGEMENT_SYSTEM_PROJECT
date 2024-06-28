@@ -10,6 +10,9 @@ This project implements an Aid Management System in C++. It allows users to mana
 - **Menu.cpp/h**: Implements the Menu class for displaying menus.
 - **Status.cpp/h**: Implements the Status class for managing status descriptions.
 - **Utils.cpp/h**: Implements utility functions for system date retrieval and other helper functions.
+- **Item.cpp/h**: Defines and implements the Item class, handling the properties and behaviors of generic items.
+- **Perishable.cpp/h**: Defines and implements the Perishable class, handling items with expiration dates.
+- **iProduct.cpp/h**: Defines the iProduct interface, which Item and Perishable classes implement.
 
 ## Usage
 1. Compile the source files using a C++ compiler.
@@ -22,6 +25,8 @@ This project implements an Aid Management System in C++. It allows users to mana
 - **Sorting**: Enables sorting of items based on quantity needed.
 - **Shipping**: Generates a shipping order for items with fulfilled quantities.
 - **System Date**: Utilizes utility functions for retrieving the system date.
+- **Perishable Items**: Manages perishable items with handling instructions and expiry dates.
+- **Persistent Storage**: Saves and loads items from files for persistent storage.
 
 ## Dependencies
 - **Utils.h**: Contains utility functions for system date retrieval and other helper functions.
